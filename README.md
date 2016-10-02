@@ -1,4 +1,4 @@
 # FreeBSDNotes
 Notes for working with FreeBSD
 
-[https://github.com/lvarela/FreeBSDNotes/wiki]
+https://github.com/lvarela/FreeBSDNotes/wiki
