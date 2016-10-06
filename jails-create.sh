@@ -13,10 +13,10 @@ tar -xvf /tmp/base.txz -C /usr/local/jails/$jail
 tar -xvf /tmp/lib32.txz -C /usr/local/jails/$jail
 tar -xvf /tmp/ports.txz -C /usr/local/jails/$jail
 
-echo 'Updating release on $jail [freebsd-update]'
+echo "Updating release on $jail [freebsd-update]"
 env UNAME_r=$rel freebsd-update -b /usr/local/jails/$jail fetch install
 
-echo 'Checking release on $jail'
+echo "Checking release on $jail"
 env UNAME_r=$rel freebsd-update -b /usr/local/jails/$jail IDS
 
 cp /etc/resolv.conf /usr/local/jails/$jail/etc/
