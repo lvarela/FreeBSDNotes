@@ -26,8 +26,13 @@ while true; do
 done
 
 
-
+echo "Fetchig FreeBSD release into /tmp/ ..."
 
 fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/10.3-RELEASE/base.txz -o /tmp/base.txz
 fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/10.3-RELEASE/lib32.txz -o /tmp/lib32.txz
 fetch http://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/10.3-RELEASE/ports.txz -o /tmp/ports.txz
+
+echo "Jail initialization done. You can create jails now with jail-create.sh"
+
+
+
