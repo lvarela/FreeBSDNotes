@@ -7,6 +7,8 @@
 jail=$1
 rel='10.3-RELEASE'
 
+zfs create zroot/jails/$jail
+
 tar -xvf /tmp/base.txz -C /usr/local/jails/$jail
 tar -xvf /tmp/lib32.txz -C /usr/local/jails/$jail
 tar -xvf /tmp/ports.txz -C /usr/local/jails/$jail
