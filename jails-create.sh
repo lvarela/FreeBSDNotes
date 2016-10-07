@@ -5,6 +5,7 @@
 ############################
 
 jail=$1
+ip=$2
 rel='10.3-RELEASE'
 
 zfs create zroot/jails/$jail
