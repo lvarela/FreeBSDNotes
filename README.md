@@ -1,4 +1,8 @@
-# FreeBSDNotes
-Notes for working with FreeBSD
+# Collection of FreeBSD related scripts and wiki
 
-https://github.com/lvarela/FreeBSDNotes/wiki
+### FreeBSD wiki
+https://github.com/lvarela/FreeBSDStuff/wiki
+
+
+
+
