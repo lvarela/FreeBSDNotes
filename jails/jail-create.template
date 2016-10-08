@@ -1,0 +1,6 @@
+${jail_name} {
+    host.hostname = "${jail_name}.domain.local";
+    path = "/usr/local/jails/${jail_name}";
+    interface = "${jail_inter}";
+    ip4.addr = ${jail_ip};
+}
