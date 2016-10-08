@@ -1,25 +1,11 @@
 #!/usr/local/bin/bash
 
+. ./functions.sh
+
 #TODO: use argument from cmd line
 zpool='zroot'
 pool_cmd='zfs create -o mountpoint=/usr/local/jails $zpool/jails'
 pool_comp='zfs set compression=lz4 $zpool/jails'
-
-use_template() {
-  eval "echo \"$(cat $1)\""
-}
-
-#$1= question $2=command to run
-ask() {
- while true; do
-    read -p "$1 [y/n]?" yn
-    case $yn in
-        [Yy]* ) eval "$2"; break;;
-        [Nn]* ) exit;;
-    * ) echo "Please answer [y]es or [n]o.";;
-    esac
-done
-}
 
 ask("Create ZFS pool ($zpool/jails)?", $pool_cmd)
 ask("Activate compression (lz4) on pool?", $pool_comp)
