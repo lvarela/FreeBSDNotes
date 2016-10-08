@@ -4,14 +4,11 @@
 #Run after jails-init.sh
 ############################
 
+. ./functions.sh
+
 jail=$1
 ip=$2
 rel='10.3-RELEASE'
-
-
-use_template() {
-  eval "echo \"$(cat $1)\""
-}
 
 zfs create zroot/jails/$jail
 
