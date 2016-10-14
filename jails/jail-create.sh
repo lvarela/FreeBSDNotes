@@ -1,5 +1,4 @@
-#!/usr/local/bin/bash
-
+#!/bin/sh
 ############################
 #Run after jails-init.sh
 ############################
@@ -7,31 +6,42 @@
 . ./functions.sh
 
 jail=$1
-ip=$2
-rel='10.3-RELEASE'
+#ip=$2
+#rel='11.0-RELEASE-p1'
+rel=$(freebsd-version)
 
-zfs create zroot/jails/$jail
+zpool=$(zpool list -H -o name | head -1)
 
-tar -xvf /tmp/base.txz -C /usr/local/jails/$jail
-tar -xvf /tmp/lib32.txz -C /usr/local/jails/$jail
-tar -xvf /tmp/ports.txz -C /usr/local/jails/$jail
+zfs create $zpool/jails/$jail
+echo "Created zpool/jails/$jail pool."
 
-echo "Updating release on $jail [freebsd-update]"
-env UNAME_r=$rel freebsd-update -b /usr/local/jails/$jail fetch install
+#delete_ports="rm -rf /usr/local/jails/$jail/usr/ports"
+ports_cmd="tar -xf  /tmp/ports.txz -C /usr/local/jails/$jail --totals"
+lib32_cmd="tar -xf  /tmp/ports.txz -C /usr/local/jails/$jail --totals"
+upd_cmd="env UNAME_r=$rel freebsd-update -b /usr/local/jails/$jail fetch install"
+start_shell="jexec $jail"
 
-echo "Checking release on $jail"
-env UNAME_r=$rel freebsd-update -b /usr/local/jails/$jail IDS
+echo "Uncompressing release on /usr/local/jails/$jail..."
+tar -xf  /tmp/base.txz -C /usr/local/jails/$jail  --totals
+ask "Do you need lib32 compatability?" "$lib32_cmd" 
+ask "Do you need the ports tree? (~1GB)" "$ports_cmd" 
+ask "Run freebsd-update on jail?" "$upd_cmd" 
+
+#env UNAME_r=$rel freebsd-update -b /usr/local/jails/$jail IDS
 
 cp /etc/resolv.conf /usr/local/jails/$jail/etc/
 echo hostname=\"$jail\" > /usr/local/jails/$jail/etc/rc.conf
 
 #write to /etc/jail.conf
 jail_name=$1
-jail_ip=$2
-jail_inter=$3
+jail_ip=$3
+jail_inter=$2
 
 use_template ./jail-create.template >> /etc/jail.conf
 
+echo "Jail created."
 
+#start jail
+jail -c $jail
 
-
+ask "Start a shell on $jail [y/n]" "$start_shell"
