@@ -9,7 +9,7 @@ ask() {
     read -p "$1 [y/n]?" yn
     case $yn in
         [Yy]* ) eval "$2"; break;;
-        [Nn]* ) exit;;
+        [Nn]* ) break;;
     * ) echo "Please answer [y]es or [n]o.";;
     esac
 done
