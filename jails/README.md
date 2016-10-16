@@ -2,7 +2,7 @@
 
 ## Create jails using only the standard FreeBSD jail tools
 
-### jail-init.sh
+### jail-init.sh [release zfs-root]
 Create a jail enviroment 
  * ZFS pool
  * downloads release 
