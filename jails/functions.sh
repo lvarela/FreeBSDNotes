@@ -1,4 +1,3 @@
-
 use_template() {
   eval "echo \"$(cat $1)\""
 }
@@ -14,3 +13,15 @@ ask() {
     esac
 done
 }
+
+#get the name of the first pool
+zpool() {
+  return $(zpool list -H -o name | head -1)
+}
+
+# Display disc use 
+#$1 = jail name
+du() {
+  du -sh /usr/local/jails/$1	
+}
+
