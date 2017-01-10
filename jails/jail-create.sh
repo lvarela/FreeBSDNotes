@@ -5,6 +5,15 @@
 
 . ./functions.sh
 
+
+if [ $# -ne 3 ]; then
+	echo "--- :: [Wrong number of arguments] :: ---"
+	echo " Usage: $0 [jailname] [network interface] [ip]"
+	echo " Example: $0 myjail em0 192.168.0.2"
+	echo "---                                   ---"
+	exit
+fi
+
 jail=$1
 #ip=$2
 #rel='11.0-RELEASE-p1'
@@ -32,11 +41,12 @@ ask "Run freebsd-update on jail?" "$upd_cmd"
 cp /etc/resolv.conf /usr/local/jails/$jail/etc/
 echo hostname=\"$jail\" > /usr/local/jails/$jail/etc/rc.conf
 
-#write to /etc/jail.conf
+#variables used in jail.conf template
 jail_name=$1
-jail_ip=$3
 jail_inter=$2
+jail_ip=$3
 
+#write to /etc/jail.conf
 use_template ./jail-create.template >> /etc/jail.conf
 
 echo "Jail created."
