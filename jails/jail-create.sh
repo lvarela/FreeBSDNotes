@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/local/bin/bash
 ############################
 #Run after jails-init.sh
 ############################
@@ -7,10 +7,14 @@
 
 
 if [ $# -ne 3 ]; then
-	echo "--- :: [Wrong number of arguments] :: ---"
+	echo "------------------------------------------------------------- "
+	echo "                                              "
+	echo " [ Jail Management Toolbox -> Create jail ]   "
+	echo "                                              "
 	echo " Usage: $0 [jailname] [network interface] [ip]"
-	echo " Example: $0 myjail em0 192.168.0.2"
-	echo "---                                   ---"
+	echo " Example use: $0 myjail em0 192.168.0.2"
+	echo "                                              "
+	echo "------------------------------------------------------------- "
 	exit
 fi
 
@@ -18,15 +22,18 @@ jail=$1
 #ip=$2
 #rel='11.0-RELEASE-p1'
 rel=$(freebsd-version)
+zpool=($(zpool list -H -o name))
 
-zpool=$(zpool list -H -o name | head -1)
+dialog_select "Jails" "Select a zpool:" zpool 
+res=$(cat /tmp/jms-res.temp)
+echo "$res"
 
-zfs create $zpool/jails/$jail
-echo "Created zpool/jails/$jail pool."
+zfs create $res/jails/$jail
+echo "Created $res/jails/$jail pool."
 
 #delete_ports="rm -rf /usr/local/jails/$jail/usr/ports"
-ports_cmd="tar -xf  /tmp/ports.txz -C /usr/local/jails/$jail --totals"
-lib32_cmd="tar -xf  /tmp/ports.txz -C /usr/local/jails/$jail --totals"
+ports_cmd="tar -xf /tmp/ports.txz -C /usr/local/jails/$jail --totals"
+lib32_cmd="tar -xf /tmp/ports.txz -C /usr/local/jails/$jail --totals"
 upd_cmd="env UNAME_r=$rel freebsd-update -b /usr/local/jails/$jail fetch install"
 start_shell="jexec $jail"
 
@@ -54,4 +61,4 @@ echo "Jail created."
 #start jail
 jail -c $jail
 
-ask "Start a shell on $jail [y/n]" "$start_shell"
+ask "Start a shell on $jail " "$start_shell"

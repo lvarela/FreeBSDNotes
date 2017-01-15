@@ -14,14 +14,20 @@ ask() {
 done
 }
 
-#get the name of the first pool
-zpool() {
-  return $(zpool list -H -o name | head -1)
-}
-
 # Display disc use 
 #$1 = jail name
 du() {
   du -sh /usr/local/jails/$1	
 }
 
+# args: backtitle menu-text array with items
+function dialog_select()
+{
+    local -n arr=$3
+
+  dialog --clear \
+    --backtitle "$1" \
+    --no-items \
+    --menu "$2" 10 40 ${#arr[@]} ${arr[@]} \
+    --output-fd 1 > /tmp/jms-res.temp   
+}
