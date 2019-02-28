@@ -3,7 +3,7 @@
 if [ $# -ne 2 ]; then
 	echo "--- :: [Wrong number of arguments] :: ---"
 	echo " Usage: $0 [release] [zfs-root]"
-	echo " Example: $0 11.0-RELEASE zroot"
+	echo " Example: $0 12.0-RELEASE zroot"
 	exit
 fi
 
